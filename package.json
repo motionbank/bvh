@@ -10,14 +10,16 @@
   },
   "main": "./lib/index",
   "scripts": {
-    "test": "make test"
+    "test": "mocha --recursive test/**/*.spec.js"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
     "eslint": "^8.10.0",
     "eslint-config-standard": "^17.0.0-1",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-n": "^15.0.0",
-    "eslint-plugin-promise": "^6.0.0"
+    "eslint-plugin-promise": "^6.0.0",
+    "mocha": "^10.0.0"
   },
   "engines": {
     "node": "*"

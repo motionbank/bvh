@@ -1,26 +1,22 @@
+require('chai').should()
+
 const bvh = require('../lib'),
   BVH = require('../lib/bvh'),
   BVHNode = require('../lib/bvh_node'),
-  Parser = require('../lib/parser'),
-  connect = require('connect'),
-  app = connect.createServer(connect.static(__dirname))
-
-app.listen(8383)
+  // Parser = require('../lib/parser'),
+  fs = require('fs'),
+  path = require('path')
 
 describe('bvh.js', function () {
-  it('should expose .read()', function () {
-    bvh.read.should.be.a('function')
-  })
-
   it('should expose .parse()', function () {
     bvh.parse.should.be.a('function')
   })
 
-  it('should read remote bvh file using xhr', function (done) {
-    bvh.read('http://127.0.0.1:8383/fixtures/A_test.bvh', function (motion) {
-      motion.should.be.instanceof(BVH)
-      done()
-    })
+  it('should parse a BVH file\'s contents', function (done) {
+    const bvhFile = fs.readFileSync(path.join(__dirname, 'fixtures', 'A_test.bvh'))
+    const motion = bvh.parse(bvhFile)
+    motion.should.be.instanceof(BVH)
+    done()
   })
 })
 
@@ -32,8 +28,8 @@ describe('Parser', function () {
 })
 
 describe('BVH', function () {
-  const str = require('fs').readFileSync(__dirname + '/fixtures/A_test.bvh').toString('utf-8'),
-    motion = bvh.parse(str)
+  const str = require('fs').readFileSync(path.join(__dirname, 'fixtures', 'A_test.bvh')).toString('utf-8')
+  const motion = bvh.parse(str)
 
   it('should be instance of BVH', function () {
     motion.should.be.instanceof(BVH)
